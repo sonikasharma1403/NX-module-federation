@@ -1,0 +1,102 @@
+{
+  "name": "remote-ipsum",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "remote-ipsum/src",
+  "prefix": "nx-new",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/remote-ipsum",
+        "index": "remote-ipsum/src/index.html",
+        "main": "remote-ipsum/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "remote-ipsum/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["remote-ipsum/src/favicon.ico", "remote-ipsum/src/assets"],
+        "styles": ["remote-ipsum/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "remote-ipsum/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "remote-ipsum/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "remote-ipsum:build:production"
+        },
+        "development": {
+          "browserTarget": "remote-ipsum:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4202,
+        "publicHost": "http://localhost:4202"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "remote-ipsum:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["remote-ipsum/**/*.ts", "remote-ipsum/**/*.html"]
+      }
+    },
+    "serve-static": {
+      "executor": "@nrwl/angular:file-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "remote-ipsum:build",
+        "port": 4202
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "remote-ipsum:build:development"
+        },
+        "production": {
+          "buildTarget": "remote-ipsum:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,102 @@
+{
+  "name": "remote-lorem",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "remote-lorem/src",
+  "prefix": "nx-new",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/remote-lorem",
+        "index": "remote-lorem/src/index.html",
+        "main": "remote-lorem/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "remote-lorem/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["remote-lorem/src/favicon.ico", "remote-lorem/src/assets"],
+        "styles": ["remote-lorem/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "remote-lorem/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "remote-lorem/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "remote-lorem:build:production"
+        },
+        "development": {
+          "browserTarget": "remote-lorem:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "remote-lorem:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["remote-lorem/**/*.ts", "remote-lorem/**/*.html"]
+      }
+    },
+    "serve-static": {
+      "executor": "@nrwl/angular:file-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "remote-lorem:build",
+        "port": 4201
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "remote-lorem:build:development"
+        },
+        "production": {
+          "buildTarget": "remote-lorem:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}
