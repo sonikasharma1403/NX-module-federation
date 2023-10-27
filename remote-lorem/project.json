@@ -6,7 +6,7 @@
   "prefix": "nx-new",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:webpack-browser",
+      "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/remote-lorem",
@@ -53,7 +53,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@nrwl/angular:webpack-dev-server",
+      "executor": "@nx/angular:webpack-dev-server",
       "configurations": {
         "production": {
           "browserTarget": "remote-lorem:build:production"
@@ -75,14 +75,14 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["remote-lorem/**/*.ts", "remote-lorem/**/*.html"]
       }
     },
     "serve-static": {
-      "executor": "@nrwl/angular:file-server",
+      "executor": "@nrwl/web:file-server",
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "remote-lorem:build",
